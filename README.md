@@ -1,1 +1,1 @@
-# Snake-Ladders
+# Snakes & Ladders
