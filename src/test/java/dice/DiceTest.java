@@ -2,12 +2,12 @@ package dice;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DiceTest {
 
     @Test
-    public void testRoll() {
+    void testRoll() {
         Dice dice = new Dice();
         Integer rollValue = dice.roll();
         assertTrue(1 <= rollValue && rollValue <= 6);

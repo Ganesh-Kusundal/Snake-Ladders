@@ -3,7 +3,7 @@ package board.square;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SquareTest {
 
@@ -12,28 +12,27 @@ class SquareTest {
     }
 
     @Test
-    public void testGetCurrentPosition() {
+    void testGetCurrentPosition() {
         Square square = new Square("98");
-        assertTrue(square.getCurrentPosition().equals("98"));
+        assertEquals("98", square.getCurrentPosition());
     }
 
     @Test
-    public void testDisplayCurrentPosition() {
+    void testDisplayCurrentPosition() {
         Square square = new Square("1");
-        assertTrue(square.displayCurrentPosition().equals("001"));
+        assertEquals("001", square.displayCurrentPosition());
     }
 
     @Test
-    public void testGetSquareType() {
+    void testGetSquareType() {
         Square square = new Square("1", SquareType.SNAKE);
-        assertTrue(square.getSquareType().equals(SquareType.SNAKE));
+        assertEquals(SquareType.SNAKE, square.getSquareType());
 
         Square square2 = new Square("2", SquareType.LADDER);
-        assertTrue(square2.getSquareType().equals(SquareType.LADDER));
+        assertEquals(SquareType.LADDER, square2.getSquareType());
 
         Square square3 = new Square("3");
-        assertTrue(square3.getSquareType().equals(SquareType.VOID));
+        assertEquals(SquareType.VOID, square3.getSquareType());
     }
-
 
 }

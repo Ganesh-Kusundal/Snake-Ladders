@@ -1,6 +1,5 @@
 package board;
 
-import dice.Dice;
 import exception.InvalidInputException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BoardTest {
 
     @Test
-    public void testGetBoard() {
+    void testGetBoard() {
         Player player1 = new Player("P1", ColorConstants.ANSI_RED_BACKGROUND);
         Player player2 = new Player("P2", ColorConstants.ANSI_GREEN_BACKGROUND);
 
@@ -29,7 +28,7 @@ class BoardTest {
     }
 
     @Test
-    public void testMovePlayer() {
+    void testMovePlayer() {
         Player player1 = new Player("P1", ColorConstants.ANSI_BLUE_BACKGROUND);
         Board gameBoard = new Board(Arrays.asList(player1));
 
@@ -41,7 +40,7 @@ class BoardTest {
     }
 
     @Test
-    public void testSetLadders() throws InvalidInputException {
+    void testSetLadders() throws InvalidInputException {
         Player player1 = Mockito.mock(Player.class);
         Board gameBoard = new Board(Arrays.asList(player1));
 
@@ -55,7 +54,7 @@ class BoardTest {
     }
 
     @Test
-    public void testSetSnakes() throws InvalidInputException {
+    void testSetSnakes() throws InvalidInputException {
         Player player1 = Mockito.mock(Player.class);
         Board gameBoard = new Board(Arrays.asList(player1));
 
@@ -67,11 +66,11 @@ class BoardTest {
         Mockito.when(player1.getName()).thenReturn("Player1");
         Mockito.when(player1.getPlayerColor()).thenReturn(ColorConstants.ANSI_GREEN_BACKGROUND);
 
-        assertTrue(gameBoard.getBoard().contains("001[" + ColorConstants.ANSI_GREEN_BACKGROUND + "Player1" + ColorConstants.ANSI_RESET +"]"));
+        assertTrue(gameBoard.getBoard().contains("001[" + ColorConstants.ANSI_GREEN_BACKGROUND + "Player1" + ColorConstants.ANSI_RESET + "]"));
     }
 
     @Test
-    public void testSetSnakesForInvalidInput()  {
+    void testSetSnakesForInvalidInput() {
         Player player1 = Mockito.mock(Player.class);
         Board gameBoard = new Board(Arrays.asList(player1));
 
@@ -81,7 +80,7 @@ class BoardTest {
     }
 
     @Test
-    public void testSetLaddersForInvalidInput()  {
+    void testSetLaddersForInvalidInput() {
         Player player1 = Mockito.mock(Player.class);
         Board gameBoard = new Board(Arrays.asList(player1));
 

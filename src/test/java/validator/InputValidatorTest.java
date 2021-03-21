@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InputValidatorTest {
     @Test
-    public void testInputValidator() {
+    void testInputValidator() {
         InputValidator validator = new InputValidator();
         Map<Integer, Integer> map = new HashMap<>();
         map.put(1, 2);
