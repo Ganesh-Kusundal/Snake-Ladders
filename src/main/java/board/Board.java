@@ -1,13 +1,13 @@
 package board;
 
 import board.square.Square;
+import exception.InvalidInputException;
 import player.Player;
 import util.ColorConstants;
+import validator.InputValidator;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -20,11 +20,25 @@ public class Board {
 
     private Square[][] gameBoard;
     private Map<Player, Integer> playerPositions;
+    private Map<Integer, Integer> ladders;
+    private Map<Integer, Integer> snakes;
+
+    private InputValidator validator = new InputValidator();
 
 
     public Board(List<Player> players) {
         initializePlayers(players);
         initializeGameBoard();
+    }
+
+    public void setLadders(Map<Integer, Integer> ladders) throws InvalidInputException {
+        validator.isValidInput(ladders, e -> e.getKey() < e.getValue());
+        this.ladders = ladders;
+    }
+
+    public void setSnakes(Map<Integer, Integer> snakes) throws InvalidInputException {
+        validator.isValidInput(snakes, e -> e.getKey() > e.getValue());
+        this.snakes = snakes;
     }
 
     private void initializeGameBoard() {
@@ -50,16 +64,30 @@ public class Board {
     }
 
     public boolean movePlayer(Player player) {
-        int position = playerPositions.get(player) + player.takeTurn();
+        Integer nextPosition = playerPositions.get(player) + player.takeTurn();
 
-        if (position <= FINAL_POSITION)
-            playerPositions.put(player, position);
+        if (isSnake(nextPosition))
+            nextPosition = snakes.get(nextPosition);
 
-        if (FINAL_POSITION == position) {
+        if (isLadder(nextPosition))
+            nextPosition = ladders.get(nextPosition);
+
+        if (nextPosition <= FINAL_POSITION)
+            playerPositions.put(player, nextPosition);
+
+        if (FINAL_POSITION == nextPosition) {
             System.out.println("Player " + player.getPlayerColor() + player.getName() + ColorConstants.ANSI_RESET + " Is Winner...Hurray!!!\n");
             return true;
         }
         return false;
+    }
+
+    private boolean isLadder(int position) {
+        return ladders != null && ladders.get(position) != null;
+    }
+
+    private boolean isSnake(int position) {
+        return snakes != null && snakes.get(position) != null;
     }
 
     public String getBoard() {
