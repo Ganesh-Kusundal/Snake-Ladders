@@ -26,7 +26,6 @@ public class Player {
            case NORMAL_DICE -> dice = new NormalDice();
            case CROOCKED_DICE -> dice = new CrookedDice();
        }
-
     }
 
     public String getName() {

@@ -1,10 +1,11 @@
 package board.display;
 
 import board.Board;
-import board.component.ILadders;
-import board.component.ISnakes;
-import board.component.Ladders;
-import board.component.Snakes;
+import board.component.ILadder;
+import board.component.ISnake;
+import board.component.Ladder;
+import board.component.Snake;
+import exception.InvalidInputException;
 import org.junit.jupiter.api.Test;
 import player.Player;
 import util.ColorConstants;
@@ -12,21 +13,18 @@ import util.ColorConstants;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PrintBoardToConsoleTest {
     @Test
-    void testPrintBoard() {
-        ILadders ladders = new Ladders();
-        Map<Integer, Integer> laddersMap = new HashMap<>();
-        laddersMap.put(5, 10);
+    void testPrintBoard() throws InvalidInputException {
+        ILadder ladder = new Ladder(5, 10);
+        List<ILadder> ladders = Arrays.asList(ladder);
 
-        ISnakes snakes = new Snakes();
-        Map<Integer, Integer> snakesMap = new HashMap<>();
-        snakesMap.put(14, 7);
+        ISnake snake = new Snake(14, 7);
+        List<ISnake> snakes = Arrays.asList(snake);
 
         Player player1 = new Player("P1", ColorConstants.ANSI_RED_BACKGROUND);
         Player player2 = new Player("P2", ColorConstants.ANSI_GREEN_BACKGROUND);
@@ -44,8 +42,6 @@ class PrintBoardToConsoleTest {
 
         IPrintBoard print = new PrintBoardToConsole(board);
         print.printBoard();
-
-
 
         // Our baos has the content from the print statement
         String output = new String(baos.toByteArray());

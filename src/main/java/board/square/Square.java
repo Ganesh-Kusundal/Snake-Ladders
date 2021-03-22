@@ -19,10 +19,6 @@ public class Square {
         return currentPosition;
     }
 
-    public void setCurrentPosition(String currentPosition) {
-        this.currentPosition = currentPosition;
-    }
-
     public String displayCurrentPosition() {
         return StringUtils.leftPad(currentPosition, 3, "0");
     }

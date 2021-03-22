@@ -1,9 +1,7 @@
 package board;
 
-import board.component.ILadders;
-import board.component.ISnakes;
-import board.component.Ladders;
-import board.component.Snakes;
+import board.component.ILadder;
+import board.component.ISnake;
 import player.Player;
 import util.ColorConstants;
 
@@ -11,10 +9,10 @@ import java.util.List;
 
 public class Board extends BaseBoard {
 
-    private ISnakes snakes;
-    private ILadders ladders;
+    private List<ISnake> snakes;
+    private List<ILadder> ladders;
 
-    public Board(List<Player> players, ISnakes snakes, ILadders ladders) {
+    public Board(List<Player> players, List<ISnake> snakes, List<ILadder> ladders) {
         super(players);
         this.snakes = snakes;
         this.ladders = ladders;
@@ -24,16 +22,26 @@ public class Board extends BaseBoard {
     public boolean movePlayer(Player player) {
         Integer currentPosition = playerPositions.get(player) + player.takeTurn();
 
-        if (snakes.isSnake(currentPosition)) {
-            System.out.println(ColorConstants.ANSI_RED_BACKGROUND + "Eaten By Snake [" + currentPosition + "] ->  \uD83D\uDC0D  ->[" + snakes.nextPosition(currentPosition) + "]" + ColorConstants.ANSI_RESET);
-            currentPosition = snakes.nextPosition(currentPosition);
 
-        }
+        do {
 
-        if (ladders.isLadder(currentPosition)) {
-            System.out.println(ColorConstants.ANSI_RED_BACKGROUND + "Jumped By Ladder [" + currentPosition + "] -> \uD83E\uDE9C  ->[" + snakes.nextPosition(currentPosition) + "]" + ColorConstants.ANSI_RESET);
-            currentPosition = ladders.nextPosition(currentPosition);
-        }
+            ISnake snake = isSneakAt(currentPosition);
+
+            if (snake != null) {
+                Integer nextPosition = snake.nextPosition(currentPosition);
+                System.out.println(ColorConstants.ANSI_RED_BACKGROUND + "Eaten By Snake [" + currentPosition + "] ->  \uD83D\uDC0D  ->[" + nextPosition + "]" + ColorConstants.ANSI_RESET);
+                currentPosition = nextPosition;
+
+            }
+
+            ILadder ladder = isLadderAt(currentPosition);
+            if (ladder != null) {
+                Integer nextPosition = ladder.nextPosition(currentPosition);
+                System.out.println(ColorConstants.ANSI_RED_BACKGROUND + "Jumped By Ladder [" + currentPosition + "] -> \uD83E\uDE9C  ->[" + nextPosition + "]" + ColorConstants.ANSI_RESET);
+                currentPosition = nextPosition;
+            }
+
+        } while (isSnakeORLadderAt(currentPosition));
 
         if (currentPosition <= FINAL_POSITION)
             playerPositions.put(player, currentPosition);
@@ -44,4 +52,26 @@ public class Board extends BaseBoard {
         }
         return false;
     }
+
+    private boolean isSnakeORLadderAt(Integer currentPosition) {
+        return null != isSneakAt(currentPosition) || null != isLadderAt(currentPosition);
+    }
+
+    private ISnake isSneakAt(Integer currentPosition) {
+        for (ISnake snake : snakes) {
+            if (snake.isSnake(currentPosition))
+                return snake;
+        }
+        return null;
+    }
+
+    private ILadder isLadderAt(Integer currentPosition) {
+        for (ILadder ladder : ladders) {
+            if (ladder.isLadder(currentPosition))
+                return ladder;
+        }
+        return null;
+    }
+
+
 }

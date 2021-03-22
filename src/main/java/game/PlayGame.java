@@ -2,17 +2,17 @@ package game;
 
 import board.BaseBoard;
 import board.Board;
-import board.component.ILadders;
-import board.component.ISnakes;
-import board.component.Ladders;
-import board.component.Snakes;
+import board.component.*;
 import board.display.IPrintBoard;
 import board.display.PrintBoardToConsole;
 import exception.InvalidInputException;
 import player.Player;
 import util.ColorConstants;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class PlayGame {
     public static void main(String[] args) throws InterruptedException, InvalidInputException {
@@ -37,17 +37,12 @@ public class PlayGame {
         Player.setDice(scanner.nextInt());
 
 
-        //Ladders map contains key as ladder entry point while value represent top of ladder
+        ISnake snake = new Snake(10, 2);
+        ISnake greenSnake = new GreenSnake(50, 25);
+        List<ISnake> snakes = Arrays.asList(snake, greenSnake);
 
-        ILadders ladders = new Ladders();
-        Map<Integer, Integer> laddersMap = new HashMap<>();
-        laddersMap.put(5, 10);
-
-        //Snakes map contains key as snake entry point while value represent tail of snake
-        ISnakes snakes = new Snakes();
-        Map<Integer, Integer> snakesMap = new HashMap<>();
-        snakesMap.put(14, 7);
-
+        ILadder ladder = new Ladder(2, 25);
+        List<ILadder> ladders = Arrays.asList(ladder);
 
         BaseBoard gameBaseBoard = new Board(players, snakes, ladders);
 
