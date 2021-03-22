@@ -14,6 +14,6 @@ class InputValidatorTest {
         InputValidator validator = new InputValidator();
         Map<Integer, Integer> map = new HashMap<>();
         map.put(1, 2);
-        assertThrows(InvalidInputException.class, () -> validator.isValidInput(map, e -> e.getKey() > e.getValue()));
+        assertThrows(InvalidInputException.class, () -> validator.isValidInput(map, e -> e.getKey() > e.getValue(), "User input is invalid, key must be greater than value"));
     }
 }
